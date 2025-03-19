@@ -1,10 +1,10 @@
 import express from 'express';
-import { registrar, perfil } from '../controllers/veterinarioController.js';
+import { registrarVeterinario, perfilVeterinario, confirmarVeterinario } from '../controllers/veterinarioController.js';
 
 const router = express.Router();
 
-router.get('/', registrar);
-
-router.get('/perfil', perfil);
+router.post('/', registrarVeterinario);
+router.get('/perfil', perfilVeterinario);
+router.get('/confirmar/:token', confirmarVeterinario);
 
 export default router;
