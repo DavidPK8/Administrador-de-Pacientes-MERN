@@ -1,4 +1,5 @@
 import Veterinario from "../models/Veterinario.js";
+import generarJWT from "../helpers/generarJWT.js";
 
 // Registrar Veterinario en DB
 const registrarVeterinario = async (req,res) => {
@@ -53,8 +54,37 @@ const confirmarVeterinario = async (req, res) => {
     }
 };
 
+// Login de Veterinarios
+const autenticarVeterinario = async (req, res) => {
+    const {email, password} = req.body;
+
+    // Comprobar si el usuario existe
+    const usuario = await Veterinario.findOne({email});
+
+    if(!usuario) {
+        const error = new Error('Usuario no existe');
+        return res.status(404).json({msg: error.message});
+    }
+
+    // Comprobar si el usuario esta confirmado
+    if(!usuario.confirmado) {
+        const error = new Error('Tu cuenta no ha sido confirmada');
+        return res.status(403).json({msg: error.message});
+    }
+
+    // Revisar el password
+    if(await usuario.comprobarPassword(password)) {
+        // Autenticar
+        res.json({token: generarJWT(usuario.id)});
+    } else {
+        const error = new Error('Password Incorrecto');
+        return res.status(404).json({msg: error.message});
+    }
+};
+
 export {
     registrarVeterinario,
     perfilVeterinario,
     confirmarVeterinario,
+    autenticarVeterinario,
 }
