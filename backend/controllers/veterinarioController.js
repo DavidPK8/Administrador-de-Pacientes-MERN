@@ -1,8 +1,9 @@
 import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
+import generarId from "../helpers/generarId.js";
 
 // Registrar Veterinario en DB
-const registrarVeterinario = async (req,res) => {
+const registrar = async (req,res) => {
     const {email} = req.body
 
     // Prevenir usuarios duplicados
@@ -24,13 +25,8 @@ const registrarVeterinario = async (req,res) => {
     }  
 };
 
-// Mostrar el perfil 
-const perfilVeterinario = (req, res) => {
-    res.json({msg: 'Mostrando Perfil'});
-};
-
 // Confirmar Token
-const confirmarVeterinario = async (req, res) => {
+const confirmar = async (req, res) => {
     const {token} = req.params
 
     // Encontrar el token del usuario
@@ -55,7 +51,7 @@ const confirmarVeterinario = async (req, res) => {
 };
 
 // Login de Veterinarios
-const autenticarVeterinario = async (req, res) => {
+const autenticar = async (req, res) => {
     const {email, password} = req.body;
 
     // Comprobar si el usuario existe
@@ -82,9 +78,76 @@ const autenticarVeterinario = async (req, res) => {
     }
 };
 
+// Mostrar el perfil 
+const perfil = (req, res) => {
+    const {veterinario} = req 
+
+    res.json({veterinario});
+};
+
+// Resetear el password
+const olvidePassword = async (req, res) => {
+    const {email} = req.body;
+
+    const existeVeterinario = await Veterinario.findOne({email});
+
+    if(!existeVeterinario) {
+        const error = new Error('El usuario no existe');
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        existeVeterinario.token = generarId();
+        await existeVeterinario.save();
+        res.json({msg: 'Hemos enviado un email con las instrucciones'});
+    } catch(error) {
+
+    }
+};
+
+// Validar Token
+const comprobarToken = async (req, res) => {
+    const {token} = req.params;
+
+    const tokenValido = await Veterinario.findOne({token});
+
+    if(tokenValido) {
+        // El token es valido el usuario existe
+        res.json({msg: 'Token valido y el usuario existe'});
+    } else {
+        const error = new Error('Token no valido');
+        return res.status(400).json({msg: error.message});
+    }
+};
+
+// Asignar un nuevo password
+const nuevoPassword = async (req, res) => {
+    const {token} = req.params;
+    const {password} = req.body;
+
+    const veterinario = await Veterinario.findOne({token});
+    if(!veterinario) {
+        const error = new Error('Hubo un error');
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        veterinario.token = null;
+        veterinario.password = password;
+
+        await veterinario.save();
+        res.json({msg: "Password modificado correctamente"});
+    } catch(error) { 
+        console.log(error);
+    }
+};
+
 export {
-    registrarVeterinario,
-    perfilVeterinario,
-    confirmarVeterinario,
-    autenticarVeterinario,
+    registrar,
+    confirmar,
+    autenticar,
+    perfil,
+    olvidePassword,
+    comprobarToken,
+    nuevoPassword
 }
