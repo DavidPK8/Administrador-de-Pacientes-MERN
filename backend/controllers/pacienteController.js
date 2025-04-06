@@ -1,4 +1,4 @@
-import Paciente from '../models/Paciente.js';
+import Paciente from "../models/Paciente.js";
 
 const agregarPaciente = async (req, res) => {
     const paciente = new Paciente(req.body);
@@ -7,42 +7,44 @@ const agregarPaciente = async (req, res) => {
     try {
         const pacienteAlmacenado = await paciente.save();
         res.json(pacienteAlmacenado);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
     }
 };
 
 const obtenerPacientes = async (req, res) => {
-    const pacientes = await Paciente.find().where('veterinario').equals(req.veterinario);
+    const pacientes = await Paciente.find()
+        .where("veterinario")
+        .equals(req.veterinario);
 
     res.json(pacientes);
 };
 
 const obtenerIdPaciente = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const paciente = await Paciente.findById(id);
 
-    if(!paciente) {
-        return res.status(404).json({msg: 'No Encontrado'});
+    if (!paciente) {
+        return res.status(404).json({ msg: "No Encontrado" });
     }
 
-    if(!paciente.veterinario._id.equals(req.veterinario._id)) {
-        return res.json({msg: 'Accion no valida'});
+    if (!paciente.veterinario._id.equals(req.veterinario._id)) {
+        return res.json({ msg: "Accion no valida" });
     }
 
     res.json(paciente);
 };
 
 const actualizarPaciente = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const paciente = await Paciente.findById(id);
 
-    if(!paciente) {
-        return res.status(404).json({msg: 'No Encontrado'});
+    if (!paciente) {
+        return res.status(404).json({ msg: "No Encontrado" });
     }
 
-    if(!paciente.veterinario._id.equals(req.veterinario._id)) {
-        return res.json({msg: 'Accion no valida'});
+    if (!paciente.veterinario._id.equals(req.veterinario._id)) {
+        return res.json({ msg: "Accion no valida" });
     }
 
     // Actualizar Paciente
@@ -55,27 +57,27 @@ const actualizarPaciente = async (req, res) => {
     try {
         const pacienteActualizado = await paciente.save();
         res.json(pacienteActualizado);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
     }
 };
 
 const eliminarPaciente = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const paciente = await Paciente.findById(id);
 
-    if(!paciente) {
-        return res.status(404).json({msg: 'No Encontrado'});
+    if (!paciente) {
+        return res.status(404).json({ msg: "No Encontrado" });
     }
 
-    if(!paciente.veterinario._id.equals(req.veterinario._id)) {
-        return res.json({msg: 'Accion no valida'});
+    if (!paciente.veterinario._id.equals(req.veterinario._id)) {
+        return res.json({ msg: "Accion no valida" });
     }
 
     try {
         await paciente.deleteOne();
-        res.json({msg: 'Paciente Eliminado'});
-    } catch(error) {
+        res.json({ msg: "Paciente Eliminado" });
+    } catch (error) {
         console.log(error);
     }
 };
@@ -85,5 +87,5 @@ export {
     obtenerPacientes,
     obtenerIdPaciente,
     actualizarPaciente,
-    eliminarPaciente
-}
+    eliminarPaciente,
+};

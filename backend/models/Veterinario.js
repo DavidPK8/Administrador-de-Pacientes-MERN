@@ -1,47 +1,47 @@
 import mongoose from "mongoose";
 import generarId from "../helpers/generarId.js";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const veterinarioSchema = mongoose.Schema({
     nombre: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
     },
     password: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
     },
     telefono: {
         type: String,
         default: null,
-        trim: true
+        trim: true,
     },
     web: {
         type: String,
         default: null,
-        trim: true
+        trim: true,
     },
     token: {
         type: String,
-        default: generarId()
+        default: generarId(),
     },
     confirmado: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 });
 
 // Hashear el password
-veterinarioSchema.pre('save', async function(next) {
-    if(!this.isModified("password")) {
+veterinarioSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
         next();
     }
 
@@ -49,10 +49,12 @@ veterinarioSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-veterinarioSchema.methods.comprobarPassword = async function(passwordFormulario) {
+veterinarioSchema.methods.comprobarPassword = async function (
+    passwordFormulario
+) {
     return await bcrypt.compare(passwordFormulario, this.password);
 };
 
-const Veterinario = mongoose.model('Veterinario', veterinarioSchema);
+const Veterinario = mongoose.model("Veterinario", veterinarioSchema);
 
 export default Veterinario;

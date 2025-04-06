@@ -1,18 +1,24 @@
-import express from 'express';
-import { agregarPaciente, obtenerPacientes, obtenerIdPaciente, actualizarPaciente, eliminarPaciente } from '../controllers/pacienteController.js';
-import checkAuth from '../middleware/authMiddleware.js';
+import express from "express";
+import {
+    agregarPaciente,
+    obtenerPacientes,
+    obtenerIdPaciente,
+    actualizarPaciente,
+    eliminarPaciente,
+} from "../controllers/pacienteController.js";
+import checkAuth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router
-    .route('/')
+    .route("/")
     .post(checkAuth, agregarPaciente)
-    .get(checkAuth, obtenerPacientes)
+    .get(checkAuth, obtenerPacientes);
 
 router
-    .route('/:id')
+    .route("/:id")
     .get(checkAuth, obtenerIdPaciente)
     .put(checkAuth, actualizarPaciente)
-    .delete(checkAuth, eliminarPaciente)
+    .delete(checkAuth, eliminarPaciente);
 
 export default router;
