@@ -11,7 +11,7 @@ const OlvidePassword = () => {
         event.preventDefault();
 
         if (email === "") {
-            setAlerta({ msg: "El Email no es obligatorio", error: true });
+            setAlerta({ msg: "El Email es obligatorio", error: true });
             return;
         }
 
