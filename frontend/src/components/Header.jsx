@@ -15,20 +15,20 @@ const Header = () => {
                 <nav className="flex flex-col items-center lg:flex-row gap-4 lg:gap-10 mt-5 lg:mt-0">
                     <Link
                         to="/admin"
-                        className="text-white text-sm uppercase font-bold"
+                        className="text-white text-sm uppercase font-bold hover:scale-125 duration-75"
                     >
                         Pacientes
                     </Link>
                     <Link
                         to="/perfil"
-                        className="text-white text-sm uppercase font-bold"
+                        className="text-white text-sm uppercase font-bold hover:scale-125 duration-75"
                     >
                         Perfil
                     </Link>
 
                     <button
                         type="button"
-                        className="text-white text-sm uppercase font-bold cursor-pointer"
+                        className="text-white text-sm uppercase font-bold cursor-pointer hover:scale-125 duration-75"
                         onClick={cerrarSesion}
                     >
                         Cerrar Sesión
