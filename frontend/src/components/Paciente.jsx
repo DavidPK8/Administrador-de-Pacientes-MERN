@@ -1,4 +1,8 @@
+import usePacientes from "../hooks/usePacientes";
+
 const Paciente = ({ paciente }) => {
+    const { setEdicion, eliminarPaciente } = usePacientes();
+
     const { email, fecha, nombre, propietario, sintomas, _id } = paciente;
 
     const formatearFecha = (fecha) => {
@@ -52,10 +56,13 @@ const Paciente = ({ paciente }) => {
             </div>
 
             <div className="flex flex-col items-center justify-evenly">
-                <button className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-lg hover:scale-105 duration-75">
+                <button
+                    className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-lg hover:scale-105 duration-75"
+                    onClick={() => setEdicion(paciente)}
+                >
                     Editar
                 </button>
-                <button className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-lg hover:scale-105 duration-75">
+                <button className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-lg hover:scale-105 duration-75" onClick={() => eliminarPaciente(_id)}>
                     Eliminar
                 </button>
             </div>
