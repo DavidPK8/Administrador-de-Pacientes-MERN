@@ -20,7 +20,7 @@ const Header = () => {
                         Pacientes
                     </Link>
                     <Link
-                        to="/perfil"
+                        to="/admin/perfil"
                         className="text-white text-sm uppercase font-bold hover:scale-125 duration-75"
                     >
                         Perfil

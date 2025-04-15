@@ -163,6 +163,61 @@ const nuevoPassword = async (req, res) => {
     }
 };
 
+// Actualizar perfil
+const actualizarPerfil = async (req, res) => {
+    const veterinario = await Veterinario.findById(req.params.id);
+
+    if (!veterinario) {
+        const error = new Error("Error al actualizar el perfil");
+        return res.status(400).json({ msg: error.message });
+    }
+
+    const { email } = req.body;
+    if (veterinario.email !== req.body.email) {
+        const existeEmail = await Veterinario.findOne({ email });
+        if (existeEmail) {
+            const error = new Error("Este email ya esta registrado");
+            return res.status(400).json({ msg: error.message });
+        }
+    }
+
+    veterinario.nombre = req.body.nombre || veterinario.nombre;
+    veterinario.email = req.body.email || veterinario.email;
+    veterinario.web = req.body.web || veterinario.web;
+    veterinario.telefono = req.body.telefono || veterinario.telefono;
+
+    try {
+        const veterinarioActualizado = await veterinario.save();
+        res.json({
+            msg: "Perfil actualizado correctamente",
+            veterinarioActualizado
+          });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Actualizar Password
+const actualizarPassword = async (req, res) => {
+    const { id } = req.veterinario;
+    const { pwd_actual, pwd_nuevo } = req.body;
+
+    const veterinario = await Veterinario.findById(id);
+    if (!veterinario) {
+        const error = new Error("Error al actualizar el password");
+        return res.status(400).json({ msg: error.message });
+    }
+
+    if (await veterinario.comprobarPassword(pwd_actual)) {
+        veterinario.password = pwd_nuevo;
+        await veterinario.save();
+        res.json({ msg: "Password actualizado correctamente" });
+    } else {
+        const error = new Error("El password actual es incorrecto");
+        return res.status(400).json({ msg: error.message });
+    }
+};
+
 export {
     registrar,
     confirmar,
@@ -171,4 +226,6 @@ export {
     olvidePassword,
     comprobarToken,
     nuevoPassword,
+    actualizarPerfil,
+    actualizarPassword,
 };
