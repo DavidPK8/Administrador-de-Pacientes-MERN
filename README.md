@@ -1,15 +1,62 @@
-# Inicio de Sesion
+# 🐕 Administrador de Veterinarios y Pacientes 🐕
 
-![image](https://github.com/user-attachments/assets/5edbc2af-580a-4d2e-9103-4e0260b3b441)
+**Administrador de Veterinarios y Pacientes** es una aplicación Full Stack diseñada para clínicas veterinarias. Permite registrar, editar y eliminar información de pacientes y veterinarios, brindando una gestión sencilla desde cualquier dispositivo.
 
-# Registro
+🔗 **[Ver página en vivo](https://administrador-de-pacientes-davidpk8.netlify.app/)**
 
-![image](https://github.com/user-attachments/assets/1a5c6dac-c6bf-46d1-95db-2c46887ad93f)
+---
 
-# Recuperar Clave
+## 🔑 Usuario de Ejemplo
 
-![image](https://github.com/user-attachments/assets/5b10bb44-867a-4eb4-b627-d4bea0d1d477)
+- **Usuario:** testuserexamplepk@gmail.com
+- **Clave:** password123
 
-# Main Page
+---
 
-![image](https://github.com/user-attachments/assets/ad51d758-5a7e-478b-8126-c512dd33ac33)
+## 🚀 Características
+
+- Registro de usuarios con validación.
+- Inicio de sesión con token JWT.
+- Rutas protegidas en frontend y backend.
+- Hashing de contraseñas con bcrypt.
+- Conexión con MongoDB Atlas.
+- Interfaz responsiva.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+### Frontend:
+- React
+- React Router
+- Axios
+- Tailwind CSS
+
+### Backend:
+- Node.js
+- Express
+- MongoDB + Mongoose
+- bcrypt
+- JSON Web Token (JWT)
+- dotenv
+
+---
+
+## 📸 Capturas de pantalla
+
+### Inicio de sesión
+![image](https://github.com/user-attachments/assets/e29bcfa7-1650-43ec-848d-8c4b54585bff)
+
+### Registro
+![image](https://github.com/user-attachments/assets/5c6f04e1-6454-4928-8e7f-689d103d05a7)
+
+### Recuperar Contraseña
+![image](https://github.com/user-attachments/assets/e6a14ff6-9a89-4fb2-8684-88f2ccfd75c2)
+
+### Página de Pacientes
+![image](https://github.com/user-attachments/assets/0c1b7633-037c-4080-8624-ca0799c60dd8)
+
+### Página de Perfil
+![image](https://github.com/user-attachments/assets/92d9a4b1-3a6c-4fce-9d32-8a68e555217c)
+
+---
